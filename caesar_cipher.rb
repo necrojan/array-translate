@@ -10,7 +10,7 @@ def caesar_cipher(str, num)
     new_str += alphabet[pos]
   end
   new_str
-  end
+end
 
 puts caesar_cipher('apple', 1)    #=> "bqqmf"
 puts caesar_cipher('bootcamp', 2) #=> "dqqvecor"

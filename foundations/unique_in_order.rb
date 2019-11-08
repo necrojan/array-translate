@@ -1,30 +1,29 @@
+# frozen_string_literal: true
+
 def unique_in_order(iterable)
+  new_arr = []
   if iterable.is_a? Enumerable
-    remove_duplicates(iterable)
+    return get_items(iterable)
   else
     chars = iterable.split('')
-    remove_duplicates(chars)
+    return get_items(chars)
   end
 end
 
-def remove_duplicates(iterable)
-  collapse = true
-  while collapse
-    collapse = false
-    iterable.each_with_index do |char, i|
-      if iterable[i] == iterable[i + 1]
-        iterable[i] = ''
-        collapse = true
-        break
-      end
+def get_items(chars)
+  new_arr = []
+  chars.each_with_index do |_char, i|
+    if chars[i] == chars[i + 1]
+      chars[i] = ''
+    else
+      new_arr << chars[i]
     end
   end
-  return iterable.reject { |ele| ele.to_s.empty? }
+  new_arr
 end
 
-
-print unique_in_order('AABBCCABC') # == ['A', 'B', 'C', 'D', 'A', 'B']
+print unique_in_order('AAAABBBCCDAABBB') # == ['A', 'B', 'C', 'D', 'A', 'B']
 puts
 print unique_in_order('ABBCcAD')         # == ['A', 'B', 'C', 'c', 'A', 'D']
 puts
-print unique_in_order([1,2,2,3,3])       # == [1,2,3]
+print unique_in_order([1, 2, 2, 3, 3]) # == [1,2,3]

@@ -12,6 +12,8 @@ def least_common_multiple(num_1, num_2)
   end
 end
 
+p least_common_multiple(12, 8)
+
 # Write a method, most_frequent_bigram, that takes in a string and returns the two adjacent letters that appear the
 # most in the string.
 def most_frequent_bigram(str)

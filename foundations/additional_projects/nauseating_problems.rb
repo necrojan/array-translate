@@ -167,3 +167,26 @@ def squaragonal?(arr)
   
   false
 end
+
+def adjacent_sum(arr)
+  sum = []
+  (0...arr.length - 1).each do |i|
+    sum << arr[i] + arr[i + 1]
+  end
+  sum
+end
+
+# Pascal's triangle is a 2-dimensional array with the shape of a pyramid. 
+# The top of the pyramid is the number 1. To generate further levels of the 
+# pyramid, every element is the sum of the element above and to the left with 
+# the element above and to the right. Nonexisting elements are treated as 0 
+# when calculating the sum. For example, here are the first 5 levels of 
+# Pascal's triangle:
+
+def pascals_triangle(num)
+  arr = []
+  (1..num).each do |i|
+    arr << (1..i).map { |v| v == 1 ? 1 : (arr.last[v - 2] + arr.last[v - 1] rescue 1) }
+  end
+  arr
+end

@@ -190,3 +190,42 @@ def pascals_triangle(num)
   end
   arr
 end
+
+# A "Mersenne prime" is a prime number that is one less than a power of 2. 
+# This means that it is a prime number with the form 2^x - 1, where x is some 
+# exponent.
+def mersenne_prime(num)
+  x = -1
+  count = 0
+
+  while count < num
+    x += 1
+    candidate = 2**x - 1
+    count += 1 if is_prime?(candidate)
+  end
+
+  2**x - 1
+end
+
+# Write a method triangular_word? that accepts a word as an argument and 
+# returns a boolean indicating whether or not that word's number 
+# encoding is a triangular number. You can assume that 
+# the argument contains lowercase letters.
+
+def triangular_word?(word)
+  alphabet = 'abcdefghijklmnopqrstuvwxyz'
+  indices = []
+  arr = []
+
+  word.each_char do |char|
+    indices << alphabet.index(char)
+  end
+
+  num = indices.map { |i| i + 1 }.sum
+
+  (1..num).each do |i|
+    arr << (i * (i + 1)) / 2
+  end
+
+  arr.include?(num)
+end

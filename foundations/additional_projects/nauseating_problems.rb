@@ -191,6 +191,17 @@ def pascals_triangle(num)
   arr
 end
 
+def is_prime?(num)
+  return false if num < 2
+
+  (2...num).each do |factor|
+    if num % factor == 0
+      return false
+    end
+  end
+  true
+end
+
 # A "Mersenne prime" is a prime number that is one less than a power of 2. 
 # This means that it is a prime number with the form 2^x - 1, where x is some 
 # exponent.
@@ -248,3 +259,50 @@ def consecutive_collapse(arr)
   arr.each { arr = collapse(arr) }
   arr
 end
+
+
+def get_primes(num)
+  primes = []
+  i = 2
+
+  while primes.length < num
+    primes << i if is_prime?(i)
+    i += 1
+  end
+  primes
+end
+
+# Write a method pretentious_primes that takes accepts an array and a number, 
+# n, as arguments. The method should return a new array where each element 
+# of the original array is replaced according to the following rules:
+
+# when the number argument is positive, replace an element with the n-th nearest
+# prime number that is greater than the element
+# when the number argument is negative, replace an element with the 
+# n-th nearest prime number that is less than the element
+def pretentious_primes(arr, n)
+  new_arr = []
+  arr.each do |ele_1|
+    primes = get_primes(ele_1)
+    new_arr << primes.select do |factor|
+      if n > 0
+        factor > ele_1
+      else
+        factor < ele_1
+      end  
+    end[n > 0 ? (n - 1) : n]
+    primes = []
+  end
+  new_arr
+end
+
+p pretentious_primes([4, 15, 7], 1)           # [5, 17, 11]
+p pretentious_primes([4, 15, 7], 2)           # [7, 19, 13]
+p pretentious_primes([12, 11, 14, 15, 7], 1)  # [13, 13, 17, 17, 11]
+p pretentious_primes([12, 11, 14, 15, 7], 3)  # [19, 19, 23, 23, 17]
+p pretentious_primes([4, 15, 7], -1)          # [3, 13, 5]
+p pretentious_primes([4, 15, 7], -2)          # [2, 11, 3]
+p pretentious_primes([2, 11, 21], -1)         # [nil, 7, 19]
+p pretentious_primes([32, 5, 11], -3)         # [23, nil, 3]
+p pretentious_primes([32, 5, 11], -4)         # [19, nil, 2]
+p pretentious_primes([32, 5, 11], -5)         # [17, nil, nil]

@@ -229,3 +229,22 @@ def triangular_word?(word)
 
   arr.include?(num)
 end
+
+
+def collapse(arr)
+  (0...arr.length - 1).each do |i|
+    if arr[i] + 1 == arr[i + 1] || arr[i] == arr[i + 1] + 1
+      return arr[0...i] + arr[i + 2 ..-1]
+    end
+  end
+  arr
+end
+
+# Write a method consecutive_collapse that accepts an array of numbers as an 
+# argument. The method should return a new array that results from continuously 
+# removing consecutive numbers that are adjacent in the array. If multiple 
+# adjacent pairs are consecutive numbers, remove the leftmost pair first.
+def consecutive_collapse(arr)
+  arr.each { arr = collapse(arr) }
+  arr
+end

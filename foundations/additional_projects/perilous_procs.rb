@@ -302,3 +302,92 @@ end
 # p chain_map(25, [add_5, half, square])  # 225
 # p chain_map(4, [square, half])          # 8
 # p chain_map(4, [half, square])          # 4
+
+# Write a method proc_suffix that accepts a sentence and a hash as arguments. 
+# The hash contains procs as keys and suffix strings as values. The method 
+# should return a new sentence where each word of the original sentence is 
+# appended with a suffix if the original word returns true when given to the 
+# corresponding proc key. If an original word returns true for multiple procs, 
+# then the suffixes should be appended in the order that they appear in the 
+# input hash.
+def proc_suffix(sentence, hash)
+  new_words = []
+  sentence.split.each do |char|
+    new_word = char
+    hash.each do |proc, val|
+      new_word += val if proc.call(char)
+    end
+    new_words << new_word
+  end
+  new_words.join(' ')
+end
+
+# contains_a = Proc.new { |w| w.include?('a') }
+# three_letters = Proc.new { |w| w.length == 3 }
+# four_letters = Proc.new { |w| w.length == 4 }
+
+# p proc_suffix('dog cat',
+#     contains_a => 'ly',
+#     three_letters => 'o'
+# )   # "dogo catlyo"
+
+# p proc_suffix('dog cat',
+#     three_letters => 'o',
+#     contains_a => 'ly'
+# )   # "dogo catoly"
+
+# p proc_suffix('wrong glad cat',
+#     contains_a => 'ly',
+#     three_letters => 'o',
+#     four_letters => 'ing'
+# )   # "wrong gladlying catlyo"
+
+# p proc_suffix('food glad rant dog cat',
+#     four_letters => 'ing',
+#     contains_a => 'ly',
+#     three_letters => 'o'
+# )   # "fooding gladingly rantingly dogo catlyo"
+
+# Write a method proctition_platinum that accepts an array and any number of 
+# additional procs as arguments. The method should return a hash where the 
+# keys correspond to the number of procs passed in.
+
+# For example, if three procs are passed in, then the hash should have the keys 
+# 1, 2, and 3.
+# The values associated with each key should be an array containing the elements
+#  of the input array that return true when passed into the corresponding proc.
+
+# For example, this means that the array that corresponds to the key 2 should 
+# contain the elements that return true when passed into the second proc.
+# If an element returns true for multiple procs, then it should only be placed 
+# into the array that corresponds to the proc that appears first in the arguments.
+def proctition_platinum(arr, *procs)
+  hash = Hash.new
+  procs.each_with_index do |proc, i|
+    new_arr = []
+    arr.each do |char|
+      if proc.call(char) && !hash.values[0].to_a.include?(char)
+        new_arr << char
+      end
+    end
+    hash[i + 1] = new_arr
+  end
+  hash
+end
+
+# is_yelled = Proc.new { |s| s[-1] == '!' }
+# is_upcase = Proc.new { |s| s.upcase == s }
+# contains_a = Proc.new { |s| s.downcase.include?('a') }
+# begins_w = Proc.new { |s| s.downcase[0] == 'w' }
+
+# p proctition_platinum(['WHO', 'what', 'when!', 'WHERE!', 'how', 'WHY'], is_yelled, contains_a)
+# # {1=>["when!", "WHERE!"], 2=>["what"]}
+
+# p proctition_platinum(['WHO', 'what', 'when!', 'WHERE!', 'how', 'WHY'], is_yelled, is_upcase, contains_a)
+# # {1=>["when!", "WHERE!"], 2=>["WHO", "WHY"], 3=>["what"]}
+
+# p proctition_platinum(['WHO', 'what', 'when!', 'WHERE!', 'how', 'WHY'], is_upcase, is_yelled, contains_a)
+# # {1=>["WHO", "WHERE!", "WHY"], 2=>["when!"], 3=>["what"]}
+
+# p proctition_platinum(['WHO', 'what', 'when!', 'WHERE!', 'how', 'WHY'], begins_w, is_upcase, is_yelled, contains_a)
+# # {1=>["WHO", "what", "when!", "WHERE!", "WHY"], 2=>[], 3=>[], 4=>[]}

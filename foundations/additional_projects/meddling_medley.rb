@@ -83,3 +83,56 @@ end
 
 # p counted_characters("that's alright folks") # ["t"]
 # p counted_characters("mississippi") # ["i", "s"]
+
+# Write a method triplet_true? that accepts a string as an argument and returns 
+# a boolean indicating whether or not the string contains three of the same 
+# character consecutively.
+
+def triplet_true?(str)
+  (0...str.length - 2).each do |i|
+    if str[i..i+2] == str[i] * 3
+      return true
+    end
+  end
+  false
+end
+
+# p triplet_true?('caaabb')        # true
+# p triplet_true?('terrrrrible')   # true
+# p triplet_true?('runninggg')     # true
+# p triplet_true?('bootcamp')      # false
+# p triplet_true?('e')             # false
+
+# Write a method energetic_encoding that accepts a string and a hash as 
+# arguments. The method should return a new string where characters of the 
+# original string are replaced with the corresponding values in the hash. 
+# If a character is not a key of the hash, then it should be replaced with a 
+# question mark ('?'). Space characters (' ') should remain unchanged.
+
+def energetic_encoding(str, hash)
+  new_str = ''
+  (0..str.length - 1).each do |i|
+    if str[i] == ' '
+      new_str += ' '
+    elsif hash.has_key?(str[i])
+      new_str += hash[str[i]]
+    else
+      new_str += '?'
+    end
+  end
+  new_str
+end
+
+# p energetic_encoding('sent sea',
+#     'e'=>'i', 's'=>'z', 'n'=>'m', 't'=>'p', 'a'=>'u'
+# ) # 'zimp ziu'
+
+# p energetic_encoding('cat',
+#     'a'=>'o', 'c'=>'k'
+# ) # 'ko?'
+
+# p energetic_encoding('hello world',
+#     'o'=>'i', 'l'=>'r', 'e'=>'a'
+# ) # '?arri ?i?r?'
+
+# p energetic_encoding('bike', {}) # '????'

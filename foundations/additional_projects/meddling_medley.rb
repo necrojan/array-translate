@@ -136,3 +136,36 @@ end
 # ) # '?arri ?i?r?'
 
 # p energetic_encoding('bike', {}) # '????'
+
+# Write a method uncompress that accepts a string as an argument. The string 
+# will be formatted so every letter is followed by a number. The method should 
+# return an "uncompressed" version of the string where every letter is 
+# repeated multiple times given based on the number that appears directly 
+# after the letter.
+
+def uncompress(str)
+  new_str = ''
+  (0...str.length - 1).each do |i|
+    new_str += str[i] * str[i + 1].to_i
+  end
+  new_str
+end
+
+# puts uncompress('a2b4c1') # 'aabbbbc'
+# puts uncompress('b1o2t1') # 'boot'
+# puts uncompress('x3y1x2z4') # 'xxxyxxzzzz'
+
+# Write a method conjunct_select that accepts an array and one or more procs as 
+# arguments. The method should return a new array containing the elements that 
+# return true when passed into all of the given procs.
+def conjunct_select(arr, *proc)
+  proc.inject(arr) { |acc, prc| acc.select(&prc) }
+end
+
+# is_positive = Proc.new { |n| n > 0 }
+# is_odd = Proc.new { |n| n.odd? }
+# less_than_ten = Proc.new { |n| n < 10 }
+
+# p conjunct_select([4, 8, -2, 11, 7, -3, 13], is_positive) # [4, 8, 11, 7, 13]
+# p conjunct_select([4, 8, -2, 11, 7, -3, 13], is_positive, is_odd) # [11, 7, 13]
+# p conjunct_select([4, 8, -2, 11, 7, -3, 13], is_positive, is_odd, less_than_ten) # [7]

@@ -62,15 +62,12 @@ class Board
     true
   end
 
+  def empty_positions?
+    # this returns [0, 1, 2]
+    indices = (0...grid.length).to_a
+    # get all the combinations of the given array
+    # [0, 0], [0, 1], [0, 2], [1, 0], [1, 1], [1, 2], [2, 0], [2, 1], [2, 2]
+    combinations = indices.product(indices)
+    combinations.any? { |pos| empty?(pos) }
+  end
 end
-
-# b = Board.new
-# b.place_mark([1, 2], :X)
-# b.place_mark([0, 0], :O)
-# b.place_mark([1, 1], :O)
-# b.place_mark([2, 2], :O)
-# b.print
-# p b.win_row?(:X)
-# p b.win_col?(:X)
-# p b.win_diagonal?(:O)
-# p b.win?(:O)

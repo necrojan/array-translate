@@ -72,4 +72,25 @@ class Array
 
     drop(idx) + take(idx)
   end
+
+  def my_join(separator = '')
+    join = ''
+
+    length.times do |i|
+      join += self[i]
+      join += separator unless i == length - 1
+    end
+
+    join
+  end
+
+  def my_reverse
+    reversed = []
+
+    my_each do |ele|
+      reversed.unshift(ele)
+    end
+
+    reversed
+  end
 end

@@ -54,8 +54,17 @@ class Array
   end
 
   def my_zip(*args)
-    height = args[0].length
-    height
+    zipped = []
+
+    length.times do |i|
+      sub_arr = [self[i]]
+      args.my_each do |arr|
+        sub_arr << arr[i]
+      end
+
+      zipped << sub_arr
+    end
+
+    zipped
   end
 end
-

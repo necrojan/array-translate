@@ -64,7 +64,12 @@ class Array
 
       zipped << sub_arr
     end
-
     zipped
+  end
+
+  def my_rotate(pos = 1)
+    idx = pos % length
+
+    drop(idx) + take(idx)
   end
 end
